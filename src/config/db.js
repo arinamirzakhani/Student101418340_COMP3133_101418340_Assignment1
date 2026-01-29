@@ -1,13 +1,32 @@
 const mongoose = require("mongoose");
 
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 const connectDB = async (uri) => {
-  try {
-    await mongoose.connect(uri);
-    console.log("✅ MongoDB connected");
-  } catch (error) {
-    console.error("❌ MongoDB connection failed:", error.message);
-    process.exit(1);
+  if (!uri) {
+    throw new Error("❌ MONGODB_URI is missing");
   }
+
+  // Reuse existing connection
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  // Create new connection (only once)
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(uri, {
+      bufferCommands: false,
+    });
+  }
+
+  cached.conn = await cached.promise;
+  console.log("✅ MongoDB connected (cached)");
+  return cached.conn;
 };
 
 module.exports = connectDB;
+

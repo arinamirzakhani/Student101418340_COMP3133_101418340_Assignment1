@@ -1,9 +1,0 @@
-{
-  "functions": {
-    "api/graphql.js": {
-      "runtime": "@vercel/node@3"
-    }
-  }
-}
-
-

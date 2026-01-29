@@ -1,8 +1,9 @@
 {
   "functions": {
     "api/graphql.js": {
-      "runtime": "nodejs18.x"
+      "runtime": "@vercel/node@3"
     }
   }
 }
+
 

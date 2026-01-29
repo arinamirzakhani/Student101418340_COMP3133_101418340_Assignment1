@@ -1,7 +1,8 @@
 {
   "functions": {
     "api/graphql.js": {
-      "runtime": "nodejs20.x"
+      "runtime": "nodejs18.x"
     }
   }
 }
+
